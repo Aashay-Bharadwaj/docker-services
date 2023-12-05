@@ -13,7 +13,7 @@ def login():
             'password': request.form.get('password')
         }
 
-        auth_response = requests.post('http://auth-service:5002/validate', json=credentials)
+        auth_response = requests.post('http://35.224.55.194:5002/validate', data=credentials)
         if auth_response.status_code == 200:
             session['authenticated'] = True
             return redirect(url_for('list_videos'))
@@ -33,7 +33,7 @@ def list_videos():
     if not session.get('authenticated'):
         return redirect(url_for('login'))
 
-    connection = mysql.connector.connect(user='root', password='password', host='mysql-service', database='videos')
+    connection = mysql.connector.connect(user='root', password='password', host='mysql', database='videos')
     cursor = connection.cursor()
     cursor.execute('SELECT name, path FROM videos')
     videos = cursor.fetchall()
@@ -47,7 +47,7 @@ def stream_video(filename):
     if not session.get('authenticated'):
         return redirect(url_for('login'))
 
-    video_url = f"http://file-system-service:5003/get/{filename}"
+    video_url = f"http://34.134.55.164:5003/get/{filename}"
     r = requests.get(video_url, stream=True)
 
     def generate():
