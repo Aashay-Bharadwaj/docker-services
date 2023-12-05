@@ -24,7 +24,7 @@ def upload_file():
     }
 
 
-    auth_response = requests.post('http://auth-service:5002/validate', json=credentials)
+    auth_response = requests.post('http://auth-service:5002/validate', data=credentials)
     if auth_response.status_code != 200:
         return "Invalid credentials", 403
 
