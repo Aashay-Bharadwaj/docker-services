@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, stream_with_context, Response, session, url_for
+from flask import Flask, render_template,render_template_string, request, redirect, stream_with_context, Response, session, url_for
 import mysql.connector
 import requests
 
