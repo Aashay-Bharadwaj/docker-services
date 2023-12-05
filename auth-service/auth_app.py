@@ -34,9 +34,8 @@ def validate_credentials():
         return render_template_string(login_form_template)
 
     # For POST requests, proceed with credential validation
-    data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
+    username = request.form.get('username')
+    password = request.form.get('password')
 
     if username in USERS and USERS[username] == password:
         return jsonify({'status': 'success'}), 200
