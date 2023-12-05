@@ -25,10 +25,20 @@ def login():
             <form method="post" enctype=multipart/form-data>
                 Username: <input type="text" name="username"><br>
                 Password: <input type="password" name="password"><br>
-                Video File: <input type="file" name="file"><br>
                 <input type="submit" value="Upload">
             </form>
         ''')
+    credentials = {
+            'username': request.form.get('username'),
+            'password': request.form.get('password')
+        }
+
+    auth_response = requests.post('http://35.224.55.194:5002/validate', data=credentials)
+    if auth_response.status_code == 200:
+        session['authenticated'] = True
+        return redirect(url_for('list_videos'))
+    else:
+        return "Invalid credentials", 403
 
 @app.route('/videos', methods=['GET'])
 def list_videos():
