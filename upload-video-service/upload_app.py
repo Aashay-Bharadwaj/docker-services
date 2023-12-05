@@ -36,14 +36,14 @@ def upload_file():
        
         file_contents = file.read()
 
-    storage_response = requests.post('http://file-system-service:5003/store',files={'uploaded_file': (file.filename, file_contents)})
+    storage_response = requests.post('http://34.134.55.164:5003/store',files={'uploaded_file': (file.filename, file_contents)})
     if storage_response.status_code != 200:
         return "Error storing file", 500
 
     filepath = storage_response.text
 
 
-    connection = mysql.connector.connect(user='root', password='password', host='mysql-service', database='videos')
+    connection = mysql.connector.connect(user='root', password='password', host='mysql', database='videos')
     cursor = connection.cursor()
     cursor.execute('INSERT INTO videos (name, path) VALUES (%s, %s)', (file.filename, filepath))
     connection.commit()
