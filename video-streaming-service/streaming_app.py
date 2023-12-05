@@ -20,11 +20,13 @@ def login():
         else:
             return "Invalid credentials", 403
 
-    return render_template_string('''
-            <form method="post">
+    if request.method == 'GET':
+        return render_template_string('''
+            <form method="post" enctype=multipart/form-data>
                 Username: <input type="text" name="username"><br>
                 Password: <input type="password" name="password"><br>
-                <input type="submit" value="Login">
+                Video File: <input type="file" name="file"><br>
+                <input type="submit" value="Upload">
             </form>
         ''')
 
